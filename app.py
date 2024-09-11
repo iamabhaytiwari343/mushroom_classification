@@ -53,8 +53,32 @@ else:
 
 
 if option == "About the Dataset":
-    st.title("Welcome to the Home Page")
-    st.write("This is the home page of the app.")
+    st.title("Details About the Dataset Used")
+    st.write("this dataset collects various physical, structural, and environmental features of mushrooms, likely for the purpose of classification or identification. The attributes cover aspects of morphology (cap, stem, gills), reproduction (spores), and ecological context (habitat, season).")
+    st.markdown("""
+- id: A unique identifier for each mushroom sample.
+- class: The classification of the mushroom, potentially indicating whether it is edible or poisonous.
+- cap-diameter: The diameter of the mushroom cap, which is the top part of the mushroom, likely measured in centimeters or millimeters.
+- cap-shape: The shape of the mushroom's cap (e.g., bell-shaped, convex, flat, etc.).
+- cap-surface: The texture or surface type of the mushroom's cap (e.g., smooth, scaly, or rough).
+- cap-color: The color of the mushroom's cap (e.g., white, brown, red, etc.).
+- does-bruise-or-bleed: Indicates whether the mushroom bruises or exudes liquid when damaged (could be a yes/no or binary value).
+- gill-attachment: How the gills (the spore-producing structures under the cap) are attached to the stem (e.g., free, attached, or descending).
+- gill-spacing: The spacing of the gills, which could be closely spaced or widely spaced.
+- gill-color: The color of the gills, which can vary and is important for identification (e.g., white, pink, brown).
+- stem-height: The height of the mushroom stem, possibly in centimeters or millimeters.
+- stem-width: The thickness or diameter of the mushroom stem.
+- stem-root: The type of root structure of the stem (e.g., bulbous, rooted, etc.).
+- stem-surface: The surface texture of the stem (e.g., smooth, fibrous, or scaly).
+- stem-color: The color of the mushroom stem (e.g., white, brown, yellow).
+- veil-type: The type of veil covering the mushroom's gills or stem before it opens (e.g., partial or universal veil).
+- veil-color: The color of the veil, which can help in identification.
+- has-ring: Indicates if the mushroom has a ring around the stem (yes/no).
+- ring-type: The type of ring around the stem (e.g., large, small, or double).
+- spore-print-color: The color of the spores when a mushroom cap is placed on paper, which can be a key identifier (e.g., white, black, brown).
+- habitat: The environment where the mushroom is typically found (e.g., woods, fields, meadows).
+- season: The time of year when the mushroom is commonly found (e.g., spring, summer, autumn).
+""")
 
 elif option == "About":
     st.title("About")
