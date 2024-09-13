@@ -1,6 +1,17 @@
 import streamlit as st
-
+import pickle
 # Set up sidebar layout with buttons styled like rectangular boxes
+with open("lgb_model.pkl", "rb") as file:
+    model = pickle.load(file)
+
+# Function to make predictions using the model
+def predict(features):
+    return model.predict([features])
+# Ensure the session state for selected page is initialized
+if 'page' not in st.session_state:
+    st.session_state['page'] = 'Home'  # Default to 'Home' on initial load
+
+
 st.sidebar.title("Mushroom Classifier")
 
 # Define a function for button style
@@ -41,18 +52,16 @@ setdapp=st.sidebar.button("Approach/Links")
 
 # Determine which button was clicked
 if home_btn:
-    option = "About the Dataset"
+    st.session_state['page'] = "About the Dataset"
 elif about_btn:
-    option = "About"
+    st.session_state['page'] = "Data Visualization"
 elif contact_btn:
-    option = "Contact"
+    st.session_state['page'] = "Prediction"
 elif setdapp:
-    option = "Approach/Links"
-else:
-    option = "About the Dataset"  # Default to Home if no button is clicked yet
+    st.session_state['page'] = "Approach/Links"
 
 
-if option == "About the Dataset":
+if st.session_state['page'] == "About the Dataset":
     st.title("Details About the Dataset Used")
     st.write("this dataset collects various physical, structural, and environmental features of mushrooms, likely for the purpose of classification or identification. The attributes cover aspects of morphology (cap, stem, gills), reproduction (spores), and ecological context (habitat, season).")
     st.markdown("""
@@ -80,13 +89,60 @@ if option == "About the Dataset":
 - season: The time of year when the mushroom is commonly found (e.g., spring, summer, autumn).
 """)
 
-elif option == "About":
-    st.title("About")
+elif st.session_state['page'] == "Data Visualization":
+    st.title("Data Visualization")
     st.write("This app is created to demonstrate navigation using Streamlit.")
 
-elif option == "Contact":
-    st.title("Contact Us")
-    st.write("Feel free to reach out via our contact form or social media.")
-elif option=="Approach/Links":
+
+
+
+elif st.session_state['page'] == "Prediction":
+    st.title("Predict/Classify")
+    # Create a form for input features (adjust fields as per your model)
+    st.subheader("Enter input values for prediction:")
+    
+    # Numerical inputs
+    feature_1 = st.number_input("cap-diameter", value=0.0, min_value=0.0, max_value=82.0)
+    feature_9 = st.number_input("stem-height", value=0.0)
+    feature_10 = st.number_input("stem-width", value=0.0)
+
+    # Categorical inputs (adjust options as needed)
+    feature_2 = st.selectbox("cap-shape", options=['f', 'x', 'p', 'b', 'o', 'c', 's', 'noise'])
+    feature_3 = st.selectbox("cap-surface", options=['s', 'h', 'y', 'l', 't', 'e', 'g', 'missing', 'd', 'i', 'w', 'k', 'noise'])
+    feature_4 = st.selectbox("cap-color", options=['u', 'o', 'b', 'g', 'w', 'n', 'e', 'y', 'r', 'p', 'k', 'l', 'noise'])
+    feature_5 = st.selectbox("does-bruise-or-bleed", options=['f', 't', 'noise'])
+    feature_6 = st.selectbox("gill-attachment", options=['a', 'x', 's', 'd', 'e', 'missing', 'f', 'p', 'noise'])
+    feature_7 = st.selectbox("gill-spacing", options=['c', 'missing', 'd', 'f', 'noise'])
+    feature_8 = st.selectbox("gill-color", options=['w', 'n', 'g', 'k', 'y', 'f', 'p', 'o', 'b', 'u', 'e', 'r', 'noise'])
+    feature_11 = st.selectbox("stem-root", options=['missing', 'b', 'c', 'r', 's', 'f', 'noise'])
+    feature_12 = st.selectbox("stem-surface", options=['missing', 'y', 's', 't', 'g', 'h', 'k', 'i', 'f', 'noise'])
+    feature_13 = st.selectbox("stem-color", options=['w', 'o', 'n', 'y', 'e', 'u', 'p', 'f', 'g', 'r', 'k', 'l', 'b', 'noise'])
+    feature_14 = st.selectbox("veil type", options=['missing', 'u', 'noise'])
+    feature_15 = st.selectbox("veil-color", options=['missing', 'n', 'w', 'k', 'y', 'e', 'u', 'noise'])
+    feature_16 = st.selectbox("has-ring", options=['f', 't', 'noise'])
+    feature_17 = st.selectbox("ring-type", options=['f', 'z', 'e', 'missing', 'p', 'l', 'g', 'r', 'm', 'noise'])
+    feature_18 = st.selectbox("spore-print-color", options=["missing", "noise","k","p","w","n","r","u","g"])
+    feature_19 = st.selectbox("habitat", options=["d", "g","l","m","h","w","p","u","noise"])
+    feature_20 = st.selectbox("season", options=["a", "u", "w","s"])
+
+
+    if st.button("Predict"):
+        # Collect all input features into a list
+        features = [
+            feature_1, feature_2, feature_3, feature_4, feature_5, feature_6, feature_7,
+            feature_8, feature_9, feature_10, feature_11, feature_12, feature_13, feature_14,
+            feature_15, feature_16, feature_17, feature_18, feature_19, feature_20
+        ]
+
+        # Make prediction using the loaded model
+        prediction = predict(features)
+
+        # Display the prediction result
+        st.success(f"The prediction is: {prediction[0]}")
+
+
+
+
+elif st.session_state['page']=="Approach/Links":
     st.title('Approach')
     st.title("Links")
