@@ -143,6 +143,7 @@ elif st.session_state['page'] == "Prediction":
 
 
 
+
 elif st.session_state['page']=="Approach/Links":
     st.title('Approach')
     st.title("Links")
